@@ -125,36 +125,36 @@ namespace Monopoloy
             Output.WriteLine("Player One\r\n");
             Output.WriteLine("Dice Rolls");
             Output.WriteLine("--------------------");
-            foreach (int line in One.DiceResults)
+            foreach (int line in PlayerArray[0].DiceResults)
             {
                 Output.WriteLine(line);
             }
             Output.WriteLine("\r\nProperties Purchased");
             Output.WriteLine("--------------------");
-            foreach (string line in One.PropertyPurchased)
+            foreach (string line in PlayerArray[0].PropertyPurchased)
             {
                 Output.WriteLine(line);
             }
             Output.WriteLine("\r\nCash Remaining");
             Output.WriteLine("--------------------");
-            Output.WriteLine(One._playercash);
+            Output.WriteLine(PlayerArray[0]._playercash);
 
             Output.WriteLine("\r\nPlayer Two\r\n");
             Output.WriteLine("Dice Rolls");
             Output.WriteLine("--------------------");
-            foreach (int line in Two.DiceResults)
+            foreach (int line in PlayerArray[1].DiceResults)
             {
                 Output.WriteLine(line);
             }
             Output.WriteLine("\r\nProperties Purchased");
             Output.WriteLine("--------------------");
-            foreach (string line in Two.PropertyPurchased)
+            foreach (string line in PlayerArray[1].PropertyPurchased)
             {
                 Output.WriteLine(line);
             }
             Output.WriteLine("\r\nCash Remaining");
             Output.WriteLine("--------------------");
-            Output.WriteLine(Two._playercash);
+            Output.WriteLine(PlayerArray[1]._playercash);
             Output.Close();
         }
     }

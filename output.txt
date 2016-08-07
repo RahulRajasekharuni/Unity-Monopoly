@@ -2,51 +2,70 @@ Player One
 
 Dice Rolls
 --------------------
-12
-8
 6
-12
-8
 5
-10
-9
-12
-12
 11
+10
+10
+7
+12
+5
+6
+4
+3
+11
+8
+3
+6
+2
+9
+9
 
 Properties Purchased
 --------------------
-Leicester Square
 The Angel Islington
 Pall Mall
-Northumrld Avenue
-Fenchurch St. Station
+Oxford Street
+Pentonville Road
+Strand
+Leicester Square
+Marlborough Street
 
 Cash Remaining
 --------------------
-960
+680
 
 Player Two
 
 Dice Rolls
 --------------------
-4
+3
 5
-11
-9
+3
+3
+8
 6
+2
+11
 7
-5
+11
+2
+3
 10
-12
-4
-9
+7
+3
+3
+8
 
 Properties Purchased
 --------------------
-Pentonville Road
-Piccadilly
+White Chapel Road
+Northumrld Avenue
+Old Kent Road
+Euston Road
+Vine Street
+Trafalgar Square
 
 Cash Remaining
 --------------------
-1300
+900
