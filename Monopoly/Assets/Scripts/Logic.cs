@@ -52,7 +52,7 @@ namespace Monopoloy
         {
             OneCash.text = PlayerArray[0]._playercash.ToString();
             TwoCash.text = PlayerArray[1]._playercash.ToString();
-            //Stops game after both players have been around the board twice.
+            //Stops game after any of the players have been around the board three times
             if (GoCounter[0] == 3 | GoCounter[1] == 3)
             {
                 RedButton.GetComponent<Button>().interactable = false;
