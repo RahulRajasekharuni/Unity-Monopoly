@@ -19,7 +19,7 @@ namespace Monopoloy
             get{ return PlayerCash;}
             set{PlayerCash = value;}
         }
-        public List<string> ProperyPurchased = new List<string>();
+        public List<string> PropertyPurchased = new List<string>();
         public List<int> DiceResults = new List<int>();
         public Player(Vector3 Position)
         {

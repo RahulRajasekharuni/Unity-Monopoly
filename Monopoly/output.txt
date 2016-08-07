@@ -1,0 +1,66 @@
+Player One
+
+Dice Rolls
+--------------------
+9
+7
+2
+9
+2
+11
+2
+7
+11
+3
+11
+12
+4
+8
+9
+4
+9
+
+Properties Purchased
+--------------------
+Marlborough Street
+Conventry Street
+Pentonville Road
+Regent Street
+
+Cash Remaining
+--------------------
+1240
+
+Player Two
+
+Dice Rolls
+--------------------
+5
+9
+4
+2
+12
+12
+7
+4
+9
+5
+2
+7
+8
+4
+12
+2
+
+Properties Purchased
+--------------------
+Oxford Street
+Pall Mall
+MaryleBone Station
+Trafalgar Square
+Piccadilly
+The Angel Islington
+
+Cash Remaining
+--------------------
+400

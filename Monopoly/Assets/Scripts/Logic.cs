@@ -13,45 +13,48 @@ namespace Monopoloy
         public GameObject PlayerTwo;
         public GameObject RedToken;
         public GameObject BlueToken;
-        public Text OneLastRoll;
-        public Text TwoLastRoll;
+        public Text LastRoll;
+        public Text Turn;
         public Text OneCash;
         public Text TwoCash;
         TileData TD = new TileData();
         Player One = new Player(new Vector3(0,0,0));
         Player Two = new Player(new Vector3(0, 0, 0));
-        private int OneLocation = 0;//Used to increment the BoardLocations array.
-        private int TwoLocation = 0;
-        private int RedGoCounter = 0;//Used to check how many times a player has been around the board.
-        private int BlueGoCounter = 0;
-        private GameObject Red = new GameObject();
-        private GameObject Blue = new GameObject();
+        private int TurnChecker = 0;
         private GameObject RedButton;
-        private GameObject BlueButton;
+
+        //These arrays are used in conjuction with TurnChecker to cylce player turns.
+        Player[] PlayerArray = new Player[2];
+        int[] LocationArr = new int[2];
+        int[] GoCounter = new int[2];
+        GameObject[] PlayerTokens = new GameObject[2];
+        GameObject[] PlayerPurchaseTokens = new GameObject[2];
 
         void Start()
         {
             TD.Locations();
             TD.BoardInfo();
+            PlayerArray[0] = One;
+            PlayerArray[1] = Two;
             //Set player initial stats and instantiate player game objects.
-            One._playerpos = TD.BoardLocations[0];
-            One._playercash = 1500;
-            Two._playerpos = TD.BoardLocations[0];
-            Two._playercash = 1500;
+            PlayerArray[0]._playerpos = TD.BoardLocations[0];
+            PlayerArray[0]._playercash = 1500;
+            PlayerArray[1]._playerpos = TD.BoardLocations[0];
+            PlayerArray[1]._playercash = 1500;
             RedButton = GameObject.Find("PlayerOne");
-            BlueButton = GameObject.Find("PlayerTwo");
-            BlueButton.GetComponent<Button>().interactable = false;
-            Red = Instantiate(PlayerOne, TD.BoardLocations[0], Quaternion.identity) as GameObject;
-            Blue = Instantiate(PlayerTwo, TD.BoardLocations[0], Quaternion.identity) as GameObject;
-           
+            PlayerTokens[0] = Instantiate(PlayerOne, TD.BoardLocations[0], Quaternion.identity) as GameObject;
+            PlayerTokens[1] = Instantiate(PlayerTwo, TD.BoardLocations[0], Quaternion.identity) as GameObject;
+            PlayerPurchaseTokens[0] = RedToken;
+            PlayerPurchaseTokens[1] = BlueToken;
         }
         
         void Update()
         {
+            OneCash.text = PlayerArray[0]._playercash.ToString();
+            TwoCash.text = PlayerArray[1]._playercash.ToString();
             //Stops game after both players have been around the board twice.
-          if (RedGoCounter == 2 && BlueGoCounter ==2)
+            if (GoCounter[0] == 3 | GoCounter[1] == 3)
             {
-                BlueButton.GetComponent<Button>().interactable = false;
                 RedButton.GetComponent<Button>().interactable = false;
             }
         }
@@ -63,92 +66,58 @@ namespace Monopoloy
             int Purchaser = UnityEngine.Random.Range(1, 3);//50% chance player will buy a purchasable property.
             int BoardChecker = 0;
             int BoardChecker2 = 0;
-            One.DiceResults.Add(Diceroll);
-            OneLocation += Diceroll;//Used to move player
-            OneLastRoll.text = Diceroll.ToString();
+            PlayerArray[TurnChecker].DiceResults.Add(Diceroll);
+            LocationArr[TurnChecker] += Diceroll;//Used to move player
+            LastRoll.text = Diceroll.ToString();
             //If statement used to check if player is near end of the board.
             //Remaining moves between current spot and GO is calculated. 
             //Next the amount of spots to move after GO is calucated.
-            if (OneLocation > 39)
+            if (LocationArr[TurnChecker] > 39)
             {
-                BoardChecker = OneLocation - Diceroll;
+                BoardChecker = LocationArr[TurnChecker] - Diceroll;
                 BoardChecker2 = 40 - BoardChecker;
                 Diceroll = Diceroll - BoardChecker2;
-                OneLocation = Diceroll;
-                One._playercash += 200;//+200 cash for passing GO.
-                RedGoCounter++;
+                LocationArr[TurnChecker] = Diceroll;
+                PlayerArray[TurnChecker]._playercash += 200;//+200 cash for passing GO.
+                GoCounter[TurnChecker]++;
             }
             //Player and player token are moved on the board.
-            One._playerpos = TD.BoardLocations[OneLocation];
-            Red.transform.position = TD.BoardLocations[OneLocation];
+            PlayerArray[TurnChecker]._playerpos = TD.BoardLocations[LocationArr[TurnChecker]];
+            PlayerTokens[TurnChecker].transform.position = TD.BoardLocations[LocationArr[TurnChecker]];
             //50% chance to buy a purchasable property if it's not owned and the player can afford it.
-            if (Purchaser == 1 && TD.TileInfo[OneLocation].Owned == false && TD.TileInfo[OneLocation].Purchasable == true && One._playercash > TD.TileInfo[OneLocation].price)
+            if (Purchaser == 1 && TD.TileInfo[LocationArr[TurnChecker]].Owned == false && TD.TileInfo[LocationArr[TurnChecker]].Purchasable == true && One._playercash > TD.TileInfo[LocationArr[TurnChecker]].price)
             {
-                Instantiate(RedToken, TD.BoardLocations[OneLocation], Quaternion.identity);
-                One._playercash -= TD.TileInfo[OneLocation].price;
-                TD.TileInfo[OneLocation].Owned = true;
-                One.ProperyPurchased.Add(TD.TileInfo[OneLocation].Name);
+                Instantiate(PlayerPurchaseTokens[TurnChecker], TD.BoardLocations[LocationArr[TurnChecker]], Quaternion.identity);
+                PlayerArray[TurnChecker]._playercash -= TD.TileInfo[LocationArr[TurnChecker]].price;
+                TD.TileInfo[LocationArr[TurnChecker]].Owned = true;
+                PlayerArray[TurnChecker].PropertyPurchased.Add(TD.TileInfo[LocationArr[TurnChecker]].Name);
             }
             //These two if statements are used to check if player lands on tax tile.
-            if (OneLocation == 4 ) 
+            if (LocationArr[TurnChecker] == 4 ) 
             {
-                One._playercash -= 200;
+                PlayerArray[TurnChecker]._playercash -= 200;
             }
-            if (OneLocation == 38)
+            if (LocationArr[TurnChecker] == 38)
             {
-                One._playercash -= 100;
+                PlayerArray[TurnChecker]._playercash -= 100;
             }
-            //Alternate button interactability to represent turns.
-            RedButton.GetComponent<Button>().interactable = false;
-            BlueButton.GetComponent<Button>().interactable = true;
-            OneCash.text = One._playercash.ToString();
+            //Reset Turnchecker if its over number of players.
+            TurnChecker += 1;
+            if (TurnChecker > 1)
+            {
+                TurnChecker = 0;
+            }
+            //Change button text to match turns.
+            if (TurnChecker == 0)
+            {
+                Turn.text = "Player One";
+            }
+            else if (TurnChecker == 1)
+            {
+                Turn.text = "Player Two";
+            }
         }
-       public void PlayerTwoButton()
-        {
-            int Diceroll = UnityEngine.Random.Range(2, 13);//Used to randomize dice roll between 2-12.
-            int Purchaser = UnityEngine.Random.Range(1, 3);//50% chance player will buy a purchasable property.
-            int BoardChecker = 0;
-            int BoardChecker2 = 0;
-            Two.DiceResults.Add(Diceroll);
-            TwoLocation += Diceroll;//Used to move player
-            TwoLastRoll.text = Diceroll.ToString();
-            //If statement used to check if player is near end of the board.
-            //Remaining moves between current spot and GO is calculated. 
-            //Next the amount of spots to move after GO is calucated.
-            if (TwoLocation > 39)
-            {
-                BoardChecker = TwoLocation - Diceroll;
-                BoardChecker2 = 40 - BoardChecker;
-                Diceroll = Diceroll - BoardChecker2;
-                TwoLocation = Diceroll;
-                Two._playercash += 200;//+200 cash for passing GO.
-                BlueGoCounter++;
-            }
-            //Player and player token are moved on the board.
-            Two._playerpos = TD.BoardLocations[OneLocation];
-            Blue.transform.position = TD.BoardLocations[TwoLocation];
-            //50% chance to buy a purchasable property if it's not owned and the player can afford it.
-            if (Purchaser == 1 && TD.TileInfo[TwoLocation].Owned == false && TD.TileInfo[TwoLocation].Purchasable == true && Two._playercash > TD.TileInfo[TwoLocation].price)
-            {
-                Instantiate(BlueToken, TD.BoardLocations[TwoLocation], Quaternion.identity);
-                Two._playercash -= TD.TileInfo[TwoLocation].price;
-                TD.TileInfo[TwoLocation].Owned = true;
-                Two.ProperyPurchased.Add(TD.TileInfo[TwoLocation].Name);
-            }
-            //These two if statements are used to check if player lands on tax tile.
-            if (TwoLocation == 4)
-            {
-                Two._playercash -= 200;
-            }
-            if (TwoLocation == 38)
-            {
-                Two._playercash -= 100;
-            }
-            //Alternate button interactability to represent turns.
-            RedButton.GetComponent<Button>().interactable = true;
-            BlueButton.GetComponent<Button>().interactable = false;
-            TwoCash.text = Two._playercash.ToString();
-        }
+      
         //Write function outputs player one and two stats to txt file when Output button is pressed.
         public void Write()
         {
@@ -162,7 +131,7 @@ namespace Monopoloy
             }
             Output.WriteLine("\r\nProperties Purchased");
             Output.WriteLine("--------------------");
-            foreach (string line in One.ProperyPurchased)
+            foreach (string line in One.PropertyPurchased)
             {
                 Output.WriteLine(line);
             }
@@ -179,7 +148,7 @@ namespace Monopoloy
             }
             Output.WriteLine("\r\nProperties Purchased");
             Output.WriteLine("--------------------");
-            foreach (string line in Two.ProperyPurchased)
+            foreach (string line in Two.PropertyPurchased)
             {
                 Output.WriteLine(line);
             }
