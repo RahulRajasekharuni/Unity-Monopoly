@@ -1,0 +1,52 @@
+Player One
+
+Dice Rolls
+--------------------
+12
+8
+6
+12
+8
+5
+10
+9
+12
+12
+11
+
+Properties Purchased
+--------------------
+Leicester Square
+The Angel Islington
+Pall Mall
+Northumrld Avenue
+Fenchurch St. Station
+
+Cash Remaining
+--------------------
+960
+
+Player Two
+
+Dice Rolls
+--------------------
+4
+5
+11
+9
+6
+7
+5
+10
+12
+4
+9
+
+Properties Purchased
+--------------------
+Pentonville Road
+Piccadilly
+
+Cash Remaining
+--------------------
+1300
