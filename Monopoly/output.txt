@@ -2,72 +2,22 @@ Player One
 
 Dice Rolls
 --------------------
-9
-6
-4
-4
-7
-8
-10
-2
-12
-12
-9
-8
-3
-7
-7
-2
-6
-10
 
 Properties Purchased
 --------------------
-Pentonville Road
-MaryleBone Station
-Vine Street
-Fleet Street
-Euston Road
-Bond Street
-Pall Mall
-Strand
-The Angel Islington
 
 Cash Remaining
 --------------------
-440
+1500
 
 Player Two
 
 Dice Rolls
 --------------------
-3
-4
-11
-7
-11
-4
-11
-9
-7
-8
-3
-9
-4
-6
-8
-3
-4
 
 Properties Purchased
 --------------------
-White Chapel Road
-Marlborough Street
-Conventry Street
-Liverpool St. Station
-Fenchurch St. Station
-Oxford Street
 
 Cash Remaining
 --------------------
-600
+1500
